@@ -2,51 +2,59 @@ const inquirer = require("inquirer");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const page = require("./src/page");
 
 let managers = [];
 let engineers = [];
 let interns = [];
 
-const run = () => {
-    inquirer.prompt([
-        {
-            type: "list",
-            message: "What kind of employee would you like to add?",
-            choices: ["Manager", "Engineer", "Intern", "Done"],
-            name: "option"
-        }
-    ])
-    .then(ans => {
-        if(ans.option === "Manager") {
-            addManager();
-        } else if(ans.option === "Engineer") {
-            addEngineer();
-        } else if(ans.option === "Intern") {
-            addIntern();
-        } else if(ans.option === "Done") {
-            generateHTML();
-        } else {
-            console.log("Invalid input");
-        }
-    });
+
+const run = async () => {
+    while(true) {
+        const choice = await inquirer.prompt([
+            {
+                type: "list",
+                message: "What kind of employee would you like to add?",
+                choices: ["Manager", "Engineer", "Intern", "Done"],
+                name: "option"
+                }
+            ]);
+    
+            if(choice.option === "Manager") {
+                await addManager();
+            } else if(choice.option === "Engineer") {
+                await addEngineer();
+            } else if(choice.option === "Intern") {
+                await addIntern();
+            } else if(choice.option === "Done") {
+                generateHTML();
+                break;
+            } else {
+                console.log("Invalid input");
+            }
+    }
 }
 
 const generateHTML = () => {
-    for(const m of managers) {
+    page.generateTopOfHTML();
 
+    for(const m of managers) {
+        page.addManager(m.getName(), m.getID(), m.getEmail(), m.getOfficeNumber());
     }
 
     for(const e of engineers) {
-
+        page.addEngineer(e.getName(), e.getID(), e.getEmail(), e.getGithub());
     }
 
     for(const i of interns) {
-        
+        page.addManager(i.getName(), i.getID(), i.getEmail(), i.getSchool());
     }
+
+    page.generateBottomOfHTML();
 }
 
-const addManager = () => {
-    inquirer.prompt([
+const addManager = async () => {
+    return await inquirer.prompt([
         {
             type: "input",
             message: "Enter manager's name:",
@@ -77,8 +85,8 @@ const addManager = () => {
     });
 }
 
-const addEngineer = () => {
-    inquirer.prompt([
+const addEngineer = async () => {
+    return await inquirer.prompt([
         {
             type: "input",
             message: "Enter the engineer's name:",
@@ -109,8 +117,8 @@ const addEngineer = () => {
     });
 }
 
-const addIntern = () => {
-    inquirer.prompt([
+const addIntern = async () => {
+    return await inquirer.prompt([
         {
             type: "input",
             message: "Enter the intern's name:",
