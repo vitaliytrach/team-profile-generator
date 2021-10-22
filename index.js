@@ -36,21 +36,22 @@ const run = async () => {
 }
 
 const generateHTML = () => {
-    page.generateTopOfHTML();
+    page.appendPage(page.generateTopOfHTML());
 
     for(const m of managers) {
-        page.addManager(m.getName(), m.getID(), m.getEmail(), m.getOfficeNumber());
+        page.appendPage(page.addManager(m.getName(), m.getID(), m.getEmail(), m.getOfficeNumber()));
     }
 
     for(const e of engineers) {
-        page.addEngineer(e.getName(), e.getID(), e.getEmail(), e.getGithub());
+        page.appendPage(page.addEngineer(e.getName(), e.getID(), e.getEmail(), e.getGithub()));
     }
 
     for(const i of interns) {
-        page.addManager(i.getName(), i.getID(), i.getEmail(), i.getSchool());
+        page.appendPage(page.addIntern(i.getName(), i.getID(), i.getEmail(), i.getSchool()));
     }
 
-    page.generateBottomOfHTML();
+    page.appendPage(page.generateBottomOfHTML());
+    page.generatePage();
 }
 
 const addManager = async () => {

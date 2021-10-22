@@ -1,8 +1,9 @@
 const fs = require("fs");
+let htmlPage = "";
 
 const generateTopOfHTML = () => {
-    fs.writeFile("./dist/index.html",
-    `<!DOCTYPE html>
+    return `
+    <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -19,97 +20,81 @@ const generateTopOfHTML = () => {
               </div>        
         </header>
         
-        <main class="d-flex justify-content-center flex-wrap">`
-    , (err) => {
-        console.log(err);
-    });
+        <main class="d-flex justify-content-center flex-wrap">    
+    `;
 }
 
 const generateBottomOfHTML = () => {
-    fs.appendFile("./dist/index.html",
-    `
+    return `
     </main>
     </body>
     </html>
     `
-    , (err) => {
-        console.log(err);
-    });
+    ;
 }
 
-const addManager = (name, id, email, officeNumber) => {
-    fs.appendFile("./dist/index.html", 
-    `
-    <div class="card m-2 shadow" style="width: 18rem;">
-        <div class="card-body bg-primary text-white">
-            <h5 class="card-title">${name}</h5>
-            <h5>
-                <span class="material-icons align-text-bottom">
-                    local_cafe
-                </span>
-                Manager
-            </h5>
-        </div>
-        <ul class="list-group list-group-flush bg-light px-3 py-4">
-            <li class="list-group-item">ID: ${id}</li>
-            <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
-            <li class="list-group-item">Office Number: ${officeNumber}</li>
-        </ul>
-    </div>       
-    `
-    , (err) => {
-        console.log(err);
-    });
+const addManager = (name, id, email, officeNumber) => { 
+    return `
+    <div class="card m-2 shadow" style="width: 20rem;">
+    <div class="card-body bg-primary text-white">
+        <h5 class="card-title">${name}</h5>
+        <h5>
+            Manager
+        </h5>
+    </div>
+    <ul class="list-group list-group-flush bg-light px-3 py-3">
+        <li class="list-group-item">ID: ${id}</li>
+        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+        <li class="list-group-item">Office Number: ${officeNumber}</li>
+    </ul>
+    </div>   
+    `;
 }
 
 const addEngineer = (name, id, email, github) => {
-    fs.appendFile("./dist/index.html", 
-    `
-    <div class="card m-2 shadow" style="width: 18rem;">
-        <div class="card-body bg-primary text-white">
-            <h5 class="card-title">${name}</h5>
-            <h5>
-                <span class="material-icons align-text-bottom">
-                    local_cafe
-                </span>
-                Manager
-            </h5>
-        </div>
-        <ul class="list-group list-group-flush bg-light px-3 py-4">
-            <li class="list-group-item">ID: ${id}</li>
-            <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
-            <li class="list-group-item">Github: <a href="github.com/${github}">${github}</a></li>
-        </ul>
-    </div>       
-    `
-    , (err) => {
-        console.log(err);
-    });
+    return `
+    <div class="card m-2 shadow" style="width: 20rem;">
+    <div class="card-body bg-primary text-white">
+        <h5 class="card-title">${name}</h5>
+        <h5>
+            Engineer
+        </h5>
+    </div>
+    <ul class="list-group list-group-flush bg-light px-3 py-3">
+        <li class="list-group-item">ID: ${id}</li>
+        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+        <li class="list-group-item">Github: <a href="github.com/${github}">${github}</a></li>
+    </ul>
+    </div>   
+    `;
 }
 
 const addIntern = (name, id, email, school) => {
-    fs.appendFile("./dist/index.html", 
-    `
-    <div class="card m-2 shadow" style="width: 18rem;">
-        <div class="card-body bg-primary text-white">
-            <h5 class="card-title">${name}</h5>
-            <h5>
-                <span class="material-icons align-text-bottom">
-                    local_cafe
-                </span>
-                Manager
-            </h5>
-        </div>
-        <ul class="list-group list-group-flush bg-light px-3 py-4">
-            <li class="list-group-item">ID: ${id}</li>
-            <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
-            <li class="list-group-item">School: ${school}</li>
-        </ul>
-    </div>       
-    `
-    , (err) => {
+    return `
+    <div class="card m-2 shadow" style="width: 20rem;">
+    <div class="card-body bg-primary text-white">
+        <h5 class="card-title">${name}</h5>
+        <h5>
+            Intern
+        </h5>
+    </div>
+    <ul class="list-group list-group-flush bg-light px-3 py-3">
+        <li class="list-group-item">ID: ${id}</li>
+        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+        <li class="list-group-item">School: ${school}</li>
+    </ul>
+    </div>    
+    `;
+}
+
+const appendPage = (text) => {
+    htmlPage += text;
+}
+
+const generatePage = () => {
+    fs.appendFile("./dist/index.html", htmlPage, (err) => {
         console.log(err);
-    });
+    }); 
 }
 
 module.exports = {
@@ -117,5 +102,7 @@ module.exports = {
     generateBottomOfHTML,
     addManager,
     addEngineer,
-    addIntern
+    addIntern,
+    appendPage,
+    generatePage
 }
