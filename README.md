@@ -19,6 +19,9 @@ Example of running app in the terminal\
 \
 Example of generated HTML page
 ![screenshot](assets/screenshots/screenshot_2.png)
+## Demo
+Link to video: https://watch.screencastify.com/v/K9H4Qb857naougs8ups7
+
 ## Credits
 Vitaliy Trach - [GitHub Profile](https://github.com/vitaliytrach)
 ## License
